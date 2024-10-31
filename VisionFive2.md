@@ -7,9 +7,9 @@
 
 Use `mkikage` package ([documentation](https://linux.die.net/man/1/mkimage)).
 
-1. You need a .its file that describe the structure of the final image, an image of miralis and whatever firmware or binary you want inside. 
+1. You need a .its file that describe the structure of the final image, an image of miralis and whatever other firmware or binaries you want inside. 
 
-The .its file (image source file) should be updated to add the different binaries and their load address.
+The .its file (image source file) should describe all the loadable binaries and their load addresses. The entrypoint address should usually be specified just once.
 
 Example of the image source file:
 ``` json
@@ -52,9 +52,13 @@ Example of the image source file:
 };
 ```
 
+*The default RAM range for VisionFive2 is `0x40000000` to `0x43FFFFFF`, so ensure your images fit within this range.*
+
 2. The command to build the image is: 
 
-`mkimage -f visionfive2-fit-image.its -A riscv -O u-boot -T firmware vision.img`
+`mkimage -f {your_its_file}.its -A riscv -O u-boot -T firmware {your_img_name}`
+
+Example: `mkimage -f visionfive2-fit-image.its -A riscv -O u-boot -T firmware vision.img`
 
 ## Justfile suggestion
 
