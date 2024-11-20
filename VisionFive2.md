@@ -83,4 +83,7 @@ You can also skip step 6 (unless you corrupted u-boot). You only need to use the
 
 To boot after flashing, set the RGPIO pins of the board to flash mode and reset the board.
 
+## Troubleshooting on Mac OS
 
+On Mac OS the XMODEM tools are not installed by default (and they do not come with `minicom` either). To get `minicom` working first install [`lsx`](https://formulae.brew.sh/formula/lrzsz#default).
+Then in `minicom` change the XMODEM program to `lsx -vv`.
