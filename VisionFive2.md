@@ -2,8 +2,13 @@
 ## Documentation
 
 [Board documentation](https://doc-en.rvspace.org/VisionFive2/PDF/VisionFive2_QSG.pdf)
+[Miralis repository](https://github.com/CharlyCst/miralis)
 
-## Build an image with Miralis for the VisionFive 2
+## Step 1: Build an image with Miralis for the VisionFive 2
+
+Navigate to the Miralis repository and run ```just vision-img```. This will generate a ```vision.img``` file containing Miralis with OpenSBI and U-Boot that is ready to flush on the board.
+
+## (alternative) Step 1: Build an image with Miralis for the VisionFive 2
 
 Use `mkikage` package ([documentation](https://linux.die.net/man/1/mkimage)).
 
@@ -60,28 +65,41 @@ Example of the image source file:
 
 Example: `mkimage -f visionfive2-fit-image.its -A riscv -O u-boot -T firmware vision.img`
 
-## Justfile suggestion
+## Step 2: Flash the VisionFive Debian image on the sd card:
 
-A rule that could be useful for the justfile of Miralis is this one.
-We could adapt it to choose the firmware, but the .its file should be updated in consequences.
+Please follow the section 3.3.1 from this link: [Flash Debian on the Board](https://doc-en.rvspace.org/VisionFive2/PDF/VisionFive2_QSG.pdf"). In particular, you should install BalenaEtcher and use this software to format the sd card.
+
+## Step 3: Flashing the board with the miralis image.
+
+For small firmware or payload, the easiest way is to use the recovering bootloader technique throught uart explained in the section 4.3 of the [board documentation]((https://doc-en.rvspace.org/VisionFive2/PDF/VisionFive2_QSG.pdf)) and use our image instead of the `visionfive2_fw_payload.img`. You need the board to boot on uart mode. In other words: 
 
 
-``` makefile
-vision-img:
-	cargo run --package runner -- build --config config/visionfive2.toml
-	cargo run --package runner -- build -v --config config/visionfive2.toml --firmware csr_write
-	mkimage -f visionfive2-fit-image.its -A riscv -O u-boot -T firmware vision.img
+Before booting the board, set the pins in upload mode (see picture) and boot the board. When you receives the CCCCCCCCCCCCC output, upload the recovery file.
+
+> Press `Ctrl + A`, then `Ctrl + S`, and load the file `jh7110-recovery-20230322.bin`.
+
+You can also skip step 6 of the documentation and upload directly the miralis image by doing: 
+
+> Press `2` to update `fw_verif/uboot` in the flash. Then, press `Ctrl + A` followed by `Ctrl + S`, and load the `visionfive2_fw_payload.img` file.
+
+
+To boot after flashing, set the RGPIO pins of the board to flash mode and reset the board like on the picture (it should be the opposite of the load mode).
+
+
+| Upload mode | Run mode |
+|--------------|----------|
+| <img src="./load.jpeg" height="500"> | <img src="./run.jpeg" height="500"> |
+| Switches are near the numbers | Switches are away of the numbers |
+
+## Troubleshooting Minicom
+
+Make sure you have the following settings if you get a NAK on sector
+
+```
+F - Hardware Flow Control: Yes
+G - Software Flow Control: No
 ```
 
-
-## Flashing the board with the image.
-
-For small firmware or payload, the easiest way is to use the recovering bootloader technique throught uart explained in the section 4.3 of the [board documentation]((https://doc-en.rvspace.org/VisionFive2/PDF/VisionFive2_QSG.pdf)) and use our image instead of the `visionfive2_fw_payload.img`. You need the board to boot on uart mode.
-
-You can also skip step 6 (unless you corrupted u-boot). You only need to use the function **2**.
-> 2: update fw_verif/uboot in flash
-
-To boot after flashing, set the RGPIO pins of the board to flash mode and reset the board.
 
 ## Troubleshooting on Mac OS
 
