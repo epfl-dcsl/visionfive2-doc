@@ -4,9 +4,19 @@
 [Board documentation](https://doc-en.rvspace.org/VisionFive2/PDF/VisionFive2_QSG.pdf)
 [Miralis repository](https://github.com/CharlyCst/miralis)
 
-## Step 1: Build an image with Miralis for the VisionFive 2
+## Step 1: Build an image with Miralis
 
-Navigate to the Miralis repository and run ```just vision-img```. This will generate a ```vision.img``` file containing Miralis with OpenSBI and U-Boot that is ready to flush on the board.
+You can either compile the fast or unmodified image using make
+
+```bash
+make unmodified-image
+```
+
+or
+
+```bash
+make miralis
+```
 
 ## (alternative) Step 1: Build an image with Miralis for the VisionFive 2
 
