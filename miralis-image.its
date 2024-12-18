@@ -17,7 +17,7 @@
 
                 opensbi {
                         description = "opensbi";
-                        data = /incbin/("../opensbi/build/platform/generic/firmware/fw_jump.bin");
+                        data = /incbin/("fw_jump.bin");
                         type = "firmware";
                         arch = "riscv";
                         load = <0x0 0x40000000>;
@@ -26,7 +26,7 @@
 
                 u-boot {
                         description = "u-boot";
-                        data = /incbin/("../u-boot/u-boot.bin");
+                        data = /incbin/(u-boot.bin");
                         type = "firmware";
                         arch = "riscv";
                         load = <0x0 0x40200000>;
