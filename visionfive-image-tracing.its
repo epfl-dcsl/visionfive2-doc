@@ -7,7 +7,7 @@
         images {
                 firmware {
                         description = "miralis";
-                        data = /incbin/("../miralis/target/riscv-unknown-miralis/debug/miralis.img");
+                        data = /incbin/("../miralis/target/riscv-unknown-miralis/release/miralis.img");
                         type = "firmware";
                         os = "u-boot";
                         load = <0x0 0x43000000>;
@@ -17,7 +17,7 @@
 
                 virtual-firmware {
                         description = "virtual firmware";
-                        data = /incbin/("fw_payload.bin");
+                        data = /incbin/("../miralis/target/riscv-unknown-firmware/debug/tracing_firmware.img");
                         type = "firmware";
                         arch = "riscv";
                         load = <0x0 0x40000000>;

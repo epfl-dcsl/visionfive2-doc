@@ -7,7 +7,7 @@
         images {
                 firmware {
                         description = "miralis";
-                        data = /incbin/("miralis/target/riscv-unknown-miralis/release/miralis.img");
+                        data = /incbin/("../miralis/target/riscv-unknown-miralis/release/miralis.img");
                         type = "firmware";
                         os = "u-boot";
                         load = <0x0 0x43000000>;
