@@ -1,17 +1,3 @@
-generate-visionfive2-image:
-	sudo apt update
-	sudo apt upgrade
-	sudo apt install gcc-riscv64-linux-gnu
-	git clone https://github.com/starfive-tech/u-boot.git
-	cd u-boot
-	git checkout -b JH7110_VisionFive2_devel origin/JH7110_VisionFive2_devel
-	git pull
-	make starfive_visionfive2_defconfig ARCH=riscv CROSS_COMPILE=riscv64-linux-gnu-
-	make ARCH=riscv CROSS_COMPILE=riscv64-linux-gnu-
-	cd ..
-	
-
-
 unmodified-image: 
 	git clone https://github.com/CharlyCst/miralis
 	cd miralis && just build config/visionfive2.toml && cd ..
